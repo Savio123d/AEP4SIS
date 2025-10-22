@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórias Locais - InovaLocal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-stone-100">
+
+    <header class="bg-stone-800 text-white p-5 shadow-lg fixed top-0 left-0 w-full z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="../index.html" class="header-logo">InovaLocal</a>
+            
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="../index.html" class="hover:text-amber-300">Início</a></li>
+                    <li><a href="historias.html" class="hover:text-amber-300">Histórias</a></li>
+                    <li><a href="cadastro.html" class="hover:text-amber-300">Cadastrar História</a></li>
+                    <li><a href="validar.html" class="hover:text-amber-300">Validar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="pt-24 container mx-auto p-5"> 
+        <h1 class="text-3xl font-bold text-amber-900 text-center mb-8">Histórias da Nossa Terra</h1>
+
+        <div id="lista-historias" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <p class="text-stone-700 col-span-full text-center">Carregando histórias...</p>
+            
+            </div>
+    </main>
+    
+    <script src="../JS/script.js"></script>
+</body>
+</html>
