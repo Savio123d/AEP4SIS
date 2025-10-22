@@ -29,3 +29,27 @@ h1, h2, h3, h4, h5, h6 {
   /* Cor Ouro/Âmbar (Tom 'Amber 300' do Tailwind) */
   color: #fcd34d; 
 }
+
+/* --- NOVOS ESTILOS --- */
+
+/* Estilos para o conteúdo da história (simulando a classe 'prose' do Tailwind) 
+  Isso garante que o texto completo da história tenha parágrafos bem espaçados.
+*/
+.prose p {
+  margin-bottom: 1.25em; /* Adiciona espaço entre parágrafos */
+}
+
+.prose ul, .prose ol {
+  margin-left: 1.5em;
+  margin-bottom: 1.25em;
+}
+
+/* Estilo para limitar o texto do card (usado em historias.html) 
+  Mostra no máximo 3 linhas de texto e adiciona "..."
+*/
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+}
