@@ -1,0 +1,31 @@
+/*
+  Arquivo: /css/style.css
+  Papel: Estilos CSS personalizados.
+  Tailwind CSS é usado para a maioria dos estilos, mas este
+  arquivo pode ser usado para overrides ou estilos complexos.
+*/
+
+/* Importa uma fonte com serifa que remete à história (opcional) */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+body {
+  /* Fonte padrão para o corpo */
+  font-family: 'Inter', sans-serif;
+  /* Cor de fundo neutra base (Tom 'Stone 100' do Tailwind) */
+  background-color: #f5f5f4; 
+}
+
+h1, h2, h3, h4, h5, h6 {
+  /* Fonte com serifa para títulos, dando um ar de "história" */
+  font-family: 'Merriweather', serif;
+}
+
+/* Estilo personalizado para o Logo no Header */
+.header-logo {
+  font-family: 'Merriweather', serif;
+  font-weight: 900; /* Extra bold */
+  font-size: 1.5rem; /* 24px */
+  /* Cor Ouro/Âmbar (Tom 'Amber 300' do Tailwind) */
+  color: #fcd34d; 
+}
