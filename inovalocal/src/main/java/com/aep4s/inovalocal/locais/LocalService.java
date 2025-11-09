@@ -25,7 +25,7 @@ public class LocalService {
     public Local atualizarLocal(Long id, Local local){
         Local localExistente = localRepository
                 .findById(id)
-                .orElseThrow(() -> new RuntimeException("local não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Local não encontrado."));
         localExistente.setPais(local.getPais());
         localExistente.setEstado(local.getEstado());
         localExistente.setCidade(local.getCidade());
