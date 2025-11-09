@@ -31,9 +31,9 @@ public class HistoriaDTO {
             @NotNull
             EstadoEnum estado,
             @NotBlank @Size(max = 80)
-            String cidade,
-            @Size(max = 80)
-            String distrito
+            String cidade
+//            @Size(max = 80)
+//            String distrito
     ){}
 
     public record MidiaDTO(
@@ -59,7 +59,7 @@ public class HistoriaDTO {
             String pais,
             String estado,
             String cidade,
-            String distrito,
+//            String distrito,
 
             List<MidiaResponse> midias
     ){
@@ -76,7 +76,7 @@ public class HistoriaDTO {
                     h.getLocal() != null ? h.getLocal().getPais() : null,
                     h.getLocal() != null && h.getLocal().getEstado() != null ? h.getLocal().getEstado().toString() : null,
                     h.getLocal() != null ? h.getLocal().getCidade() : null,
-                    h.getLocal() != null ? h.getLocal().getDistrito() : null,
+//                    h.getLocal() != null ? h.getLocal().getDistrito() : null,
                     h.getMidias() != null ? h.getMidias().stream().map(MidiaResponse::from).toList() : List.of()
             );
         }

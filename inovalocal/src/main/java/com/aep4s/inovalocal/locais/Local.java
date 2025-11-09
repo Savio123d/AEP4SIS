@@ -15,7 +15,7 @@ public class Local {
     @Enumerated(EnumType.STRING)
     private EstadoEnum estado;
     private String cidade;
-    private String distrito;
+//    private String distrito;
 
 
 
