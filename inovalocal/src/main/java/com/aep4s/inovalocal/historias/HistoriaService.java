@@ -2,27 +2,67 @@ package com.aep4s.inovalocal.historias;
 
 import com.aep4s.inovalocal.historias.exceptions.ForbiddenException;
 import com.aep4s.inovalocal.historias.exceptions.NotFoundException;
-import com.aep4s.inovalocal.locais.EstadoEnum;
+import com.aep4s.inovalocal.historias.midia.Midia;
 import com.aep4s.inovalocal.locais.Local;
 import com.aep4s.inovalocal.locais.LocalRepository;
+import com.aep4s.inovalocal.usuarios.UsuarioRepository;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
+
+@Data
 @Service
 public class HistoriaService {
     @Autowired
-    private HistoriaRepository historiaRepository;
-    private LocalRepository localRepository;
+    private final HistoriaRepository historiaRepository;
+    private final LocalRepository localRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    public HistoriaService(HistoriaRepository historiaRepository, LocalRepository localRepository){
+    public HistoriaService(HistoriaRepository historiaRepository, LocalRepository localRepository, UsuarioRepository usuarioRepository){
         this.historiaRepository = historiaRepository;
         this.localRepository = localRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
-    public Historia cadastrarHistoria(Historia historia){
-        return historiaRepository.save(historia);
+    public Historia cadastrarHistoria(HistoriaDTO.CriarHistoriaRequest dto){
+        var autor = usuarioRepository.findById(dto.usuarioId())
+                .orElseThrow(() -> new NotFoundException("Usuário não encontrado."));
+        var h = new Historia();
+        h.setTitulo(dto.titulo());
+        h.setConteudo(dto.conteudo());
+        h.setAutor(autor);
+
+        if(dto.local() != null){
+            var L = dto.local();
+            var novo = new Local();
+            novo.setPais(L.pais());
+            novo.setEstado(L.estado());
+            novo.setCidade(L.cidade());
+            novo.setDistrito(L.distrito());
+            localRepository.save(novo);
+            h.setLocal(novo);
+        }
+
+        if(dto.midias() != null){
+            dto.midias().forEach(m -> {
+                var midia = new Midia();
+                midia.setUrl(m.url());
+                midia.setTipo(m.tipo());
+                midia.setDescricao(m.descricao());
+                h.adicionarMidia(midia);
+            });
+        }
+        return historiaRepository.save(h);
+    }
+
+    public HistoriaDTO.HistoriaResponse buscarHistoriaResponse(Long id){
+        var h = historiaRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("História não encontrada."));
+        return HistoriaDTO.HistoriaResponse.from(h);
     }
 
     public List<Historia> listarHistorias(){
@@ -35,30 +75,42 @@ public class HistoriaService {
 
     @Transactional
     public Historia atualizarHistoria(Long id, HistoriaDTO.AtualizarHistoriaRequest dto, Long idUsuario) throws NotFoundException {
-        Historia h = historiaRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("História não encontrada"));
+        var h = historiaRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("História não encontrada."));
         if (!h.getAutor().getId().equals(idUsuario)){
-            throw new ForbiddenException("Você não pode editar esta história");
+            throw new ForbiddenException("Você não pode editar esta história.");
         }
 
         if(dto.titulo() != null) h.setTitulo(dto.titulo());
         if(dto.conteudo() != null) h.setConteudo(dto.conteudo());
-        if(dto.dataPublicacao() != null) h.setDataPublicacao(dto.dataPublicacao());
+
         if(dto.localId() != null){
-            Local loc = localRepository.findById(dto.localId())
+            var loc = localRepository.findById(dto.localId())
                     .orElseThrow(() -> new NotFoundException("Local não encontrado."));
             h.setLocal(loc);
         } else if (dto.local() != null){
-            HistoriaDTO.LocalDTO L = dto.local();
-
-            Local novo = new Local();
+            var L = dto.local();
+            var novo = new Local();
             novo.setPais(L.pais());
-            novo.setEstado(EstadoEnum.valueOf(String.valueOf(L.estado())));
+            novo.setEstado(L.estado());
             novo.setCidade(L.cidade());
             novo.setDistrito(L.distrito());
             localRepository.save(novo);
             h.setLocal(novo);
         }
+
+        if(dto.midias() != null){
+            var existentes = List.copyOf(h.getMidias());
+            existentes.forEach(h::removerMidia);
+            dto.midias().forEach(m -> {
+                var midia = new Midia();
+                midia.setUrl(m.url());
+                midia.setTipo(m.tipo());
+                midia.setDescricao(m.descricao());
+                h.adicionarMidia(midia);
+            });
+        }
+        h.setDataUltimaEdicao(LocalDate.now());
         h.setStatus(HistoriaStatus.EDITADA);
         return h;
     }

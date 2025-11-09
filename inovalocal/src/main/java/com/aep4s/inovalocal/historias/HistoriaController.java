@@ -2,6 +2,7 @@ package com.aep4s.inovalocal.historias;
 
 import com.aep4s.inovalocal.historias.exceptions.NotFoundException;
 import com.aep4s.inovalocal.historias.exceptions.ForbiddenException;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,26 +21,37 @@ public class HistoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<Historia> cadastrar(@RequestBody Historia historia) {
-        Historia criada = historiaService.cadastrarHistoria(historia);
+    public ResponseEntity<HistoriaDTO.HistoriaResponse> cadastrar(
+            @Valid @RequestBody HistoriaDTO.CriarHistoriaRequest dto) {
+        var criada = historiaService.cadastrarHistoria(dto);
+        var body = HistoriaDTO.HistoriaResponse.from(criada);
         return ResponseEntity
-                .created(URI.create("/historias/" + criada.getId())) // Location header
-                .body(criada);
+                .created(URI.create("/historias/" + criada.getId()))
+                .body(body);
     }
 
     @GetMapping
-    public ResponseEntity<List<Historia>> listar() {
-        return ResponseEntity.ok(historiaService.listarHistorias());
+    public ResponseEntity<List<HistoriaDTO.HistoriaResponse>> listar() {
+        var list = historiaService.listarHistorias()
+                .stream()
+                .map(HistoriaDTO.HistoriaResponse::from)
+                .toList();
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<HistoriaDTO.HistoriaResponse> buscarPorId(@PathVariable Long id){
+        return ResponseEntity.ok(historiaService.buscarHistoriaResponse(id));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Historia> atualizar(
+    public ResponseEntity<HistoriaDTO.HistoriaResponse> atualizar(
             @PathVariable Long id,
-            @RequestBody HistoriaDTO.AtualizarHistoriaRequest dto,
+            @Valid @RequestBody HistoriaDTO.AtualizarHistoriaRequest dto,
             @RequestHeader("idUsuario") Long idUsuario // provisório: pego do header
     ) {
-        Historia atualizada = historiaService.atualizarHistoria(id, dto, idUsuario);
-        return ResponseEntity.ok(atualizada);
+        var atualizada = historiaService.atualizarHistoria(id, dto, idUsuario);
+        return ResponseEntity.ok(HistoriaDTO.HistoriaResponse.from(atualizada));
     }
 
     @DeleteMapping("/{id}")
