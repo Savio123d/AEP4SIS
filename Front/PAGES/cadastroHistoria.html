@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar História - InovaLocal</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f4;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Merriweather', serif;
+            color: #b45309;
+        }
+
+        .navbar{
+            display: flex;
+            justify-content: right;
+            margin: 0;
+            padding: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            font-family: 'Merriweather', serif;
+            font-weight: 500;
+            width: 100%;
+            height: 60px;
+            background-color: #292524;
+        }
+
+        .navbar-logo {
+            float: left;
+            margin-right: auto;
+            display: flex;
+            align-items: center;
+            padding: 14px 20px;
+            font-family: 'Merriweather', serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: #fcd34d;
+        }
+
+        .navbar a {
+            color: #f3f4f6;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            font-size: 15px;
+        }
+        .navbar a:hover {
+            background-color: #423734;
+            color: white;
+        }
+        .navbar a.selecionado {
+            background-color: #423734;
+            color: white;
+        }
+        .content {
+            margin-top: 80px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            width:630px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            justify-self: center;
+        }
+        .content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form{
+            font-family: 'Inter', sans-serif;
+            color: #111827;
+            font-size: large;
+        }
+        #form-cadastro-historia label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        input[type="file"]{
+            color: #fff;
+        }
+        input[type="file"]::file-selector-button{
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: #92400e;
+            background-color: #fff1c3;
+            border: none;
+            border-radius: 4px;
+            padding: 10px;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: background-color 200ms;
+        }
+        input[type="file"]::file-selector-button:hover{
+            background-color: #ffecb3;
+        }
+        #estado{
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        #estado option {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: #111827;
+
+        }
+        #conteudo{
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+            text-align: left;
+            vertical-align: top;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+        }
+        #conteudo::placeholder {
+            color: #9ca3af;
+            font-family: 'Inter', sans-serif;
+        }
+        .button {
+            background-color: #92400e;
+            border: none;
+            border-radius: 5px;
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            text-align: center;
+            display: inline-block;
+            cursor: pointer;
+            width: 100%;
+            height: 50px;
+            color: #ffffff;
+            margin-top: 10px;
+            transition: background-color 200ms;
+        }
+        .button:hover{
+            background-color: #b45309;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1 class="navbar-logo">InovaLocal</h1>
+        <a href="../index.html">Início</a>
+        <a href="historias.html">Histórias</a>
+        <a href="cadastroHistoria.html" class="selecionado">Cadastrar História</a>
+        <a href="validar.html">Validar</a>
+        <a href="cadastroUsuario.html" >Cadastre-se</a>
+    </div>
+    <div class="content">
+        <h1>Envie sua história</h1>
+        <div class="form">
+            <form id="form-cadastro-historia">
+                <label for="titulo">Título da história:</label>
+                <input type="text" id="titulo" name="titulo" required>
+                <br><br>
+                <label for="conteudo">Conteúdo:</label>
+                <textarea id="conteudo" name="conteudo" placeholder="Digite o conteúdo da história aqui..."></textarea>
+                <br><br>
+                <label for="pais">País:</label>
+                <input type="text" id="pais" name="pais" required>
+                <br><br>
+                <label for="estado">Estado:</label>
+                <select id="estado" name="estado" required>
+                    <option value="">Selecione o estado</option>
+                    <option value="AC">Acre</option>
+                    <option value="AL">Alagoas</option>
+                    <option value="AP">Amapá</option>
+                    <option value="AM">Amazonas</option>
+                    <option value="BA">Bahia</option>
+                    <option value="CE">Ceará</option>
+                    <option value="DF">Distrito Federal</option>
+                    <option value="ES">Espírito Santo</option>
+                    <option value="GO">Goiás</option>
+                    <option value="MA">Maranhão</option>
+                    <option value="MT">Mato Grosso</option>
+                    <option value="MS">Mato Grosso do Sul</option>
+                    <option value="MG">Minas Gerais</option>
+                    <option value="PA">Pará</option>
+                    <option value="PB">Paraíba</option>
+                    <option value="PR">Paraná</option>
+                    <option value="PE">Pernambuco</option>
+                    <option value="PI">Piauí</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="RN">Rio Grande do Norte</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="RO">Rondônia</option>
+                    <option value="RR">Roraima</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="SE">Sergipe</option>
+                    <option value="TO">Tocantins</option>
+                </select>
+                <br><br>
+                <label for="cidade">Cidade:</label>
+                <input type="text" id="cidade" name="cidade" required>
+                <br><br>
+                <label for="midia">Mídias (Imagem, Vídeo ou Áudio):</label>
+                <input type="file" id="midia" name="midia" accept="image/*,video/*,audio/*" multiple>
+                <br>
+                <span id="nomes-arquivos">Nenhum arquivo selecionado</span>
+                <br><br>
+                <button type="submit" class="button">Cadastrar</button>
+            </form>
+    </div>
+
+    <script src="../JS/script.js"></script>
+</body>
+</html>
