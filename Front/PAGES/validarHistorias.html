@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Histórias Locais - InovaLocal</title>
+    <title>Validar Histórias - InovaLocal</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
@@ -34,7 +34,7 @@
             margin: 0;
             overflow: hidden;
             font-weight: 500;
-            width: 1346px;
+            width: 100%;
             height: 60px;
             background-color: #292524;
             z-index: 1000;
@@ -88,35 +88,41 @@
             text-align: center;
             margin: 16px 0 32px;
         }
-        .grid-cards {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 28px;
+        .page-subtitle {
+            text-align: center;
+            color: #4b5563;
+            font-family: 'Merriweather', serif;
+            font-size: 1.2rem;
+            margin: 0 0 28px;
         }
-        .card-historia {
-            grid-column: span 4;
+        .review-list {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+        .card-review {
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 22px;
+            padding: 20px 22px;
             display: flex;
-            flex-direction: column;
-            gap: 14px;
+            align-items: center;
+            gap: 22px;
         }
-        .titulo-historia {
+        .info-review {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+        .title-review {
+            margin: 0 0 6px;
             color: #b45309;
-            margin: 0;
-            display: -webkit-box;
-            line-clamp: 3;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            font-family: 'Merriweather', serif;
             font-size: 1.5rem;
+            font-family: 'Merriweather', serif;
+            line-height: 1.2;
         }
-        .resumo-historia {
-            color: #4b5563;
+        .resumo-review {
             margin: 0;
+            color: #4b5563;
             display: -webkit-box;
             line-clamp: 3;
             -webkit-line-clamp: 3;
@@ -126,43 +132,51 @@
             font-family: 'Merriweather', serif;
             font-size: 1rem;
         }
-        .cidade-historia {
-            color: #6b7280;
-            margin: 0 0 8px;
-            font-style: italic;
-            font-family: 'Merriweather', serif;
-            font-size: 0.9rem;
+        .actions-review {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
         }
         .btn{
-            margin-top: auto;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            height: 48px;
-            border-radius: 8px;
+            height: 44px;
             padding: 0 18px;
-            background-color: #b45309;
+            border: none;
+            border-radius: 8px;
             color: white;
-            text-decoration: none;
-            font-family: 'Merriweather', serif;
             font-weight: 600;
-            letter-spacing: .2px;
+            cursor: pointer;
             box-shadow: 0 4px 10px rgba(0,0,0,0.08);
             transition: transform .06s ease, background-color .2s ease, box-shadow .2s ease;
         }
         .btn:hover {
-            background-color: #92400e;
             box-shadow: 0 6px 14px rgba(0,0,0,0.12);
-            transform: translateY(-2px);
+            transform: translateY(-1px);
+        }
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .btn-approve {
+            background-color: #10b981;
+        }
+        .btn-approve:hover {
+            background-color: #059669;
+        }
+        .btn-reject {
+            background-color: #ef4444;
+        }
+        .btn-reject:hover {
+            background-color: #b91c1c;
         }
         footer {
             background-color: #292524;
             color: #d1d5db;
             text-align: center;
             padding: 15px;
-            margin-left: -10px;
             position: absolute;
-            width: 1319px;
+            left: -10px;
+            bottom: -10px;
+            width: 100%;
             height: 30px;
             padding-top: 0px;
             font-family: 'Merriweather', serif;
@@ -174,60 +188,47 @@
     <div class="navbar">
         <h1 class="navbar-logo">InovaLocal</h1>
         <a href="homepage.html">Início</a>
-        <a href="historias.html" class="selecionado">Histórias</a>
+        <a href="historias.html">Histórias</a>
         <a href="cadastroHistoria.html">Cadastrar História</a>
-        <a href="validarHistorias.html">Validar</a>
+        <a href="validarHistorias.html" class="selecionado">Validar Histórias</a>
         <a href="cadastroUsuario.html" >Cadastre-se</a>
     </div>
 
     <main class="page"> 
         <div class="container">
-            <h1 class="page-title">Histórias da Nossa Terra</h1>
-            <section class="grid-cards">
-                <article class="card-historia">
-                    <header>
-                        <h2 class="titulo-historia">A fundação de Maringá</h2>
-                    </header>
-                    <p class="resumo-historia">Uma breve história sobre os pioneiros e a Companhia Melhoramentos... A cidade foi planejada por Jorge de Macedo Vieira...</p>
-                    <p class="cidade-historia">Maringá, PR</p>
-                    <a class="btn" href="detalhes.html?id=1">Leia mais</a>
+            <h1 class="page-title">Histórias com validação pendente:</h1>
+            <p class="page-subtitle">Esta página lista as histórias enviadas pelos usuários para revisão e validação antes de serem publicadas.</p>
+            <section class="review-list">
+                <article class="card-review">
+                    <div class="info-review">
+                        <h2 class="title-review">A guerra do contestado</h2>
+                        <p class="resumo-review">
+                            O conflito social que marcou Santa Catarina...
+                        </p>
+                    </div>
+                    <div class="actions-review">
+                        <button class="btn btn-approve">Aprovar</button>
+                        <button class="btn btn-reject">Recusar</button>
+                    </div>
                 </article>
-                <article class="card-historia">
-                    <header>
-                        <h2 class="titulo-historia">O Ciclo do Café em Londrina</h2>
-                    </header>
-                    <p class="resumo-historia">
-                    Como o café moldou a região norte do Paraná e atraiu migrantes de todo o Brasil...
-                    </p>
-                    <p class="cidade-historia"><em>Cidade: Londrina, PR</em></p>
-                    <a class="btn" href="detalhes.html?id=2">Leia mais</a>
+                <article class="card-review">
+                    <div class="info-review">
+                        <h2 class="title-review">História da minha rua</h2>
+                        <p class="resumo-review">
+                    Meu avô contou que aqui era tudo mato e só tinha uma capivara...</p>
+                    </div>
+                    <div class="actions-review">
+                        <button class="btn btn-approve">Aprovar</button>
+                        <button class="btn btn-reject">Recusar</button>
+                    </div>
                 </article>
-
-                <article class="card-historia">
-                    <header>
-                        <h2 class="titulo-historia">Lendas Urbanas de Curitiba</h2>
-                    </header>
-                    <p class="resumo-historia">
-                    A história da Loira Fantasma do Batel, que assombrava taxistas nas noites frias...
-                    </p>
-                    <p class="cidade-historia"><em>Cidade: Curitiba, PR</em></p>
-                    <a class="btn" href="detalhes.html?id=3">Leia mais</a>
-                </article>
-                <article class="card-historia">
-                    <header>
-                        <h2 class="titulo-historia">As cataratas de Foz</h2>
-                    </header>
-                    <p class="resumo-historia">
-                    A descoberta das quedas e o impacto no turismo local e internacional. Santos Dumont teve um papel crucial em tornar a área um parque público...
-                    </p>
-                    <p class="cidade-historia"><em>Cidade: Foz do Iguaçu, PR</em></p>
-                    <a class="btn" href="detalhes.html?id=4">Leia mais</a>
             </section>
         </div>
     </main>
     <footer>
         <p>&copy; 2025 InovaLocal - Todos os direitos reservados.</p>
     </footer>
+    
     <script src="../JS/script.js"></script>
 </body>
 </html>
