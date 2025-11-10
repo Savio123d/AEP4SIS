@@ -42,7 +42,7 @@ public class HistoriaService {
             novo.setPais(L.pais());
             novo.setEstado(L.estado());
             novo.setCidade(L.cidade());
-            novo.setDistrito(L.distrito());
+//            novo.setDistrito(L.distrito());
             localRepository.save(novo);
             h.setLocal(novo);
         }
@@ -94,7 +94,7 @@ public class HistoriaService {
             novo.setPais(L.pais());
             novo.setEstado(L.estado());
             novo.setCidade(L.cidade());
-            novo.setDistrito(L.distrito());
+//            novo.setDistrito(L.distrito());
             localRepository.save(novo);
             h.setLocal(novo);
         }
