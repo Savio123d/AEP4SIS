@@ -19,31 +19,24 @@ public class HistoriaDTO {
             String conteudo,
             @NotNull
             Long usuarioId,
-            @Valid
-            LocalDTO local,
-            @Valid
-            List<MidiaDTO> midias
-    ){}
-
-    public record LocalDTO(
+//            @Valid
+//            List<MidiaDTO> midias,
             @NotBlank @Size(max = 60)
             String pais,
             @NotNull
             EstadoEnum estado,
             @NotBlank @Size(max = 80)
             String cidade
-//            @Size(max = 80)
-//            String distrito
     ){}
 
-    public record MidiaDTO(
-            @NotBlank @Size(max = 512)
-            String url,
-            @NotNull
-            MidiaTipo tipo,
-            @Size(max = 160)
-            String descricao
-    ){}
+//    public record MidiaDTO(
+//            @NotBlank @Size(max = 512)
+//            String url,
+//            @NotNull
+//            MidiaTipo tipo,
+//            @Size(max = 160)
+//            String descricao
+//    ){}
 
     public record HistoriaResponse(
             Long id,
@@ -53,15 +46,11 @@ public class HistoriaDTO {
             HistoriaStatus status,
 
             Long autorId,
-            String autorNome,
-
-            Long localId,
             String pais,
             String estado,
-            String cidade,
+            String cidade
 //            String distrito,
 
-            List<MidiaResponse> midias
     ){
         public static HistoriaResponse from(Historia h) {
             return new HistoriaResponse(
@@ -70,40 +59,30 @@ public class HistoriaDTO {
                     h.getConteudo(),
                     h.getDataPublicacao(),
                     h.getStatus(),
-                    h.getAutor() != null ? h.getAutor().getId() : null,
-                    h.getAutor() != null ? h.getAutor().getNome() : null,
-                    h.getLocal() != null ? h.getLocal().getId() : null,
-                    h.getLocal() != null ? h.getLocal().getPais() : null,
-                    h.getLocal() != null && h.getLocal().getEstado() != null ? h.getLocal().getEstado().toString() : null,
-                    h.getLocal() != null ? h.getLocal().getCidade() : null,
+                    h.getAutor().getId(),
+                    h.getPais(),
+                    h.getEstado().toString(),
+                    h.getCidade()
 //                    h.getLocal() != null ? h.getLocal().getDistrito() : null,
-                    h.getMidias() != null ? h.getMidias().stream().map(MidiaResponse::from).toList() : List.of()
+//                    h.getMidias() != null ? h.getMidias().stream().map(MidiaResponse::from).toString() : List.of().toString()
             );
         }
     }
 
-    public record MidiaResponse(
-            Long id,
-            String url,
-            String tipo,
-            String descricao
-    ){
-        public static MidiaResponse from(com.aep4s.inovalocal.historias.midia.Midia m){
-            return new MidiaResponse(m.getId(), m.getUrl(), m.getTipo().toString(), m.getDescricao());
-        }
-    }
+//    public record MidiaResponse(
+//            Long id,
+//            String url,
+//            String tipo,
+//            String descricao
+//    ){
 
     public record AtualizarHistoriaRequest(
             @Size(max = 160)
             String titulo,
             @Size(max = 10000)
-            String conteudo,
-
-            Long localId,
-            @Valid
-            LocalDTO local,
-            @Valid
-            List<MidiaDTO> midias
+            String conteudo
+//            @Valid
+//            List<MidiaDTO> midias
     ){}
 
 }

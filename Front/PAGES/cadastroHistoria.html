@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +24,7 @@
             color: #b45309;
         }
 
-        .navbar{
+        .navbar {
             display: flex;
             justify-content: right;
             margin: 0;
@@ -60,39 +61,49 @@
             transition: background-color 0.3s;
             font-size: 15px;
         }
+
         .navbar a:hover {
             background-color: #423734;
             color: white;
         }
+
         .navbar a.selecionado {
             background-color: #423734;
             color: white;
         }
+
         .content {
             margin-top: 80px;
             padding: 20px;
             background-color: #fff;
             border-radius: 8px;
-            width:630px;
+            width: 630px;
+            height: 1000px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             justify-self: center;
         }
+
         .content h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
             text-align: center;
         }
-        .form{
+
+        .form {
             font-family: 'Inter', sans-serif;
             color: #111827;
             font-size: large;
         }
+
         #form-cadastro-historia label {
             display: block;
             margin-bottom: 5px;
             font-weight: 600;
         }
-        input[type="text"], select, textarea {
+
+        input[type="text"],
+        select,
+        textarea {
             width: 100%;
             padding: 10px;
             margin-top: 5px;
@@ -101,10 +112,12 @@
             box-sizing: border-box;
             font-size: 16px;
         }
-        input[type="file"]{
+
+        input[type="file"] {
             color: #fff;
         }
-        input[type="file"]::file-selector-button{
+
+        input[type="file"]::file-selector-button {
             font-family: 'Inter', sans-serif;
             font-size: 16px;
             font-weight: 600;
@@ -117,10 +130,12 @@
             cursor: pointer;
             transition: background-color 200ms;
         }
-        input[type="file"]::file-selector-button:hover{
+
+        input[type="file"]::file-selector-button:hover {
             background-color: #ffecb3;
         }
-        #estado{
+
+        #estado {
             width: 100%;
             padding: 10px;
             margin-top: 5px;
@@ -129,13 +144,15 @@
             box-sizing: border-box;
             font-size: 16px;
         }
+
         #estado option {
             font-family: 'Inter', sans-serif;
             font-size: 16px;
             color: #111827;
 
         }
-        #conteudo{
+
+        #conteudo {
             width: 100%;
             height: 200px;
             padding: 10px;
@@ -149,10 +166,12 @@
             white-space: pre-wrap;
             overflow-wrap: break-word;
         }
+
         #conteudo::placeholder {
             color: #9ca3af;
             font-family: 'Inter', sans-serif;
         }
+
         .button {
             background-color: #92400e;
             border: none;
@@ -168,9 +187,14 @@
             margin-top: 10px;
             transition: background-color 200ms;
         }
-        .button:hover{
+
+        .button:hover {
             background-color: #b45309;
         }
+        .wrapper{
+            height:1070px;
+        }
+
         footer {
             background-color: #292524;
             color: #d1d5db;
@@ -178,8 +202,8 @@
             padding: 15px;
             position: absolute;
             left: -10px;
-            bottom: -500px;
             width: 100%;
+            bottom: -600px;
             height: 30px;
             padding-top: 0px;
             font-family: 'Merriweather', serif;
@@ -187,6 +211,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="navbar">
         <h1 class="navbar-logo">InovaLocal</h1>
@@ -194,70 +219,162 @@
         <a href="historias.html">Histórias</a>
         <a href="cadastroHistoria.html" class="selecionado">Cadastrar História</a>
         <a href="validarHistorias.html">Validar</a>
-        <a href="cadastroUsuario.html" >Cadastre-se</a>
+        <a href="cadastroUsuario.html">Cadastre-se</a>
         <a href="loginUsuario.html">Faça login</a>
     </div>
-    <div class="content">
-        <h1>Envie sua história</h1>
-        <div class="form">
-            <form id="form-cadastro-historia">
-                <label for="titulo">Título da história:</label>
-                <input type="text" id="titulo" name="titulo" required>
-                <br><br>
-                <label for="conteudo">Conteúdo:</label>
-                <textarea id="conteudo" name="conteudo" placeholder="Digite o conteúdo da história aqui..."></textarea>
-                <br><br>
-                <label for="pais">País:</label>
-                <input type="text" id="pais" name="pais" required>
-                <br><br>
-                <label for="estado">Estado:</label>
-                <select id="estado" name="estado" required>
-                    <option value="">Selecione o estado</option>
-                    <option value="AC">Acre</option>
-                    <option value="AL">Alagoas</option>
-                    <option value="AP">Amapá</option>
-                    <option value="AM">Amazonas</option>
-                    <option value="BA">Bahia</option>
-                    <option value="CE">Ceará</option>
-                    <option value="DF">Distrito Federal</option>
-                    <option value="ES">Espírito Santo</option>
-                    <option value="GO">Goiás</option>
-                    <option value="MA">Maranhão</option>
-                    <option value="MT">Mato Grosso</option>
-                    <option value="MS">Mato Grosso do Sul</option>
-                    <option value="MG">Minas Gerais</option>
-                    <option value="PA">Pará</option>
-                    <option value="PB">Paraíba</option>
-                    <option value="PR">Paraná</option>
-                    <option value="PE">Pernambuco</option>
-                    <option value="PI">Piauí</option>
-                    <option value="RJ">Rio de Janeiro</option>
-                    <option value="RN">Rio Grande do Norte</option>
-                    <option value="RS">Rio Grande do Sul</option>
-                    <option value="RO">Rondônia</option>
-                    <option value="RR">Roraima</option>
-                    <option value="SC">Santa Catarina</option>
-                    <option value="SP">São Paulo</option>
-                    <option value="SE">Sergipe</option>
-                    <option value="TO">Tocantins</option>
-                </select>
-                <br><br>
-                <label for="cidade">Cidade:</label>
-                <input type="text" id="cidade" name="cidade" required>
-                <br><br>
-                <label for="midia">Mídias (Imagem, Vídeo ou Áudio):</label>
-                <input type="file" id="midia" name="midia" accept="image/*,video/*,audio/*" multiple>
-                <br>
-                <span id="nomes-arquivos">Nenhum arquivo selecionado</span>
-                <br><br>
-                <button type="submit" class="button">Enviar para validação</button>
-            </form>
-    </div>
+    <div class="wrapper">
+        <div class="content">
+            <h1>Envie sua história</h1>
+            <div class="form">
+                <form id="form-cadastro-historia">
+                    <label for="titulo">Título da história:</label>
+                    <input type="text" id="titulo" name="titulo" required>
+                    <br><br>
+                    <label for="conteudo">Conteúdo:</label>
+                    <textarea id="conteudo" name="conteudo" placeholder="Digite o conteúdo da história aqui..."></textarea>
+                    <br><br>
+                    <label for="autor">Seu nome completo:</label>
+                    <input type="text" id="autor" name="autor" required>
+                    <br><br>
+                    <label for="pais">País:</label>
+                    <input type="text" id="pais" name="pais" required>
+                    <br><br>
+                    <label for="estado">Estado:</label>
+                    <select id="estado" name="estado" required>
+                        <option value="">Selecione o estado</option>
+                        <option value="AC">Acre</option>
+                        <option value="AL">Alagoas</option>
+                        <option value="AP">Amapá</option>
+                        <option value="AM">Amazonas</option>
+                        <option value="BA">Bahia</option>
+                        <option value="CE">Ceará</option>
+                        <option value="DF">Distrito Federal</option>
+                        <option value="ES">Espírito Santo</option>
+                        <option value="GO">Goiás</option>
+                        <option value="MA">Maranhão</option>
+                        <option value="MT">Mato Grosso</option>
+                        <option value="MS">Mato Grosso do Sul</option>
+                        <option value="MG">Minas Gerais</option>
+                        <option value="PA">Pará</option>
+                        <option value="PB">Paraíba</option>
+                        <option value="PR">Paraná</option>
+                        <option value="PE">Pernambuco</option>
+                        <option value="PI">Piauí</option>
+                        <option value="RJ">Rio de Janeiro</option>
+                        <option value="RN">Rio Grande do Norte</option>
+                        <option value="RS">Rio Grande do Sul</option>
+                        <option value="RO">Rondônia</option>
+                        <option value="RR">Roraima</option>
+                        <option value="SC">Santa Catarina</option>
+                        <option value="SP">São Paulo</option>
+                        <option value="SE">Sergipe</option>
+                        <option value="TO">Tocantins</option>
+                    </select>
+                    <br><br>
+                    <label for="cidade">Cidade:</label>
+                    <input type="text" id="cidade" name="cidade" required>
+                    <br><br>
+                    <label for="midia">Mídias (Imagem, Vídeo ou Áudio):</label>
+                    <input type="file" id="midia" name="midia" accept="image/*,video/*,audio/*" multiple>
+                    <br>
+                    <span id="nomes-arquivos">Nenhum arquivo selecionado</span>
+                    <br><br>
+                    <button type="submit" class="button">Enviar para validação</button>
+                </form>
+            </div>
+        </div>
+        <footer>
+            <p>&copy; 2025 InovaLocal - Todos os direitos reservados.</p>
+        </footer>
 
-    <footer>
-        <p>&copy; 2025 InovaLocal - Todos os direitos reservados.</p>
-    </footer>
+        <script>
+            const API = "http://localhost:6967/historias";
 
-    <script src="../JS/script.js"></script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const form = document.getElementById("form-cadastro-historia");
+                const titulo = document.getElementById("titulo");
+                const conteudo = document.getElementById("conteudo");
+                const pais = document.getElementById("pais");
+                const estado = document.getElementById("estado");
+                const cidade = document.getElementById("cidade");
+                const midia = document.getElementById("midia");
+                const nomesArquivos = document.getElementById("nomes-arquivos");
+
+                let msg = document.getElementById("mensagem");
+                if (!msg) {
+                    msg = document.createElement("div");
+                    msg.id = "mensagem";
+                    msg.style.marginTop = "12px";
+                    form.appendChild(msg);
+                }
+
+                midia?.addEventListener("change", () => {
+                    const nomes = midia.files?.length ? [...midia.files].map(f => f.name).join(", ") : "Nenhum arquivo selecionado";
+                    nomesArquivos.textContent = nomes;
+                });
+
+                form.addEventListener("submit", onSubmit);
+
+                async function onSubmit(e) {
+                    e.preventDefault();
+                    clearMsg();
+
+                    const usuarioId = parseInt(localStorage.getItem("usuarioId") || "1", 10); // PROVISÓRIO
+
+                    const dto = {
+                        titulo: (titulo.value || "").trim(),
+                        conteudo: (conteudo.value || "").trim(),
+                        pais: (pais.value || "").trim(),
+                        estado: (estado.value || "").trim(),
+                        cidade: (cidade.value || "").trim(),
+                        usuarioId,
+                        midias: []
+
+                    };
+
+                    if (!dto.titulo || !dto.conteudo || !dto.pais || !dto.estado || !dto.cidade) {
+                        return showMsg("Preencha título, país, estado e cidade.", "erro");
+                    }
+                    if (Number.isNaN(usuarioId)){
+                        return showMsg("UsuarioId iinvalido (login não definido).", "erro");
+                    }
+
+                    try {
+                        const resp = await fetch(API, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Accept": "application/json"
+                            },
+                            body: JSON.stringify(dto)
+                        });
+
+                        const text = await resp.text();
+                        const data = tryParseJSON(text);
+
+                        if (!resp.ok) {
+                            const detalhe = data?.message || data?.error || text || `Falha ${resp.status}`;
+                            throw new Error(detalhe);
+                        }
+
+                        showMsg("História enviada para validação!", "ok");
+                        form.reset();
+                        nomesArquivos.textContent = "Nenhum arquivo selecionado";
+                    } catch (err) {
+                        console.error(err);
+                        showMsg(String(err.message || err), "erro");
+                    }
+                }
+
+                function clearMsg() { msg.textContent = ""; msg.className = "msg"; msg.style.color = "#333"; }
+                function showMsg(t, tipo) {
+                    msg.textContent = t;
+                    msg.className = tipo === "ok" ? "msg ok" : "msg erro";
+                    msg.style.color = tipo === "ok" ? "green" : "crimson";
+                }
+                function tryParseJSON(s) { try { return JSON.parse(s); } catch { return null; } }
+            });
+        </script>
 </body>
+
 </html>

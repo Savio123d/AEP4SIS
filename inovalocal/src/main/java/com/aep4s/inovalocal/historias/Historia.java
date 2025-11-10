@@ -1,6 +1,7 @@
 package com.aep4s.inovalocal.historias;
 
 import com.aep4s.inovalocal.historias.midia.Midia;
+import com.aep4s.inovalocal.locais.EstadoEnum;
 import com.aep4s.inovalocal.locais.Local;
 import com.aep4s.inovalocal.usuarios.Usuario;
 import jakarta.persistence.*;
@@ -29,8 +30,9 @@ public class Historia {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Usuario autor;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Local local;
+    private String pais;
+    private EstadoEnum estado;
+    private String cidade;
 
     @OneToMany(mappedBy = "historia", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Midia> midias = new ArrayList<>();
