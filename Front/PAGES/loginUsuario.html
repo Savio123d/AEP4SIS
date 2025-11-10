@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de usuário - InovaLocal</title>
+    <title>Login de usuário - InovaLocal</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
@@ -160,166 +160,113 @@
         <a href="historias.html">Histórias</a>
         <a href="cadastroHistoria.html">Cadastrar História</a>
         <a href="validarHistorias.html">Validar</a>
-        <a href="cadastroUsuario.html" class="selecionado">Cadastre-se</a>
-        <a href="loginUsuario.html">Faça login</a>
+        <a href="cadastroUsuario.html">Cadastre-se</a>
+        <a href="loginUsuario.html" class="selecionado">Faça login</a>
     </div>
     <div class="content">
-        <h1>Cadastre-se</h1>
+        <h1>Login</h1>
         <div class="form">
-            <form id="form-cadastro-usuario">
-                <label for="nome">Nome Completo:</label>
-                <input type="text" id="nome" name="nome" required>
-                <br><br>
+            <form id="form-login-usuario">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
                 <br><br>
                 <label for="senha">Senha:</label>
                 <input type="password" id="senha" name="senha" required>
                 <br><br>
-                <label for="confirmar-senha">Confirmar Senha:</label>
-                <input type="password" id="confirmar-senha" name="confirmar-senha" required>
-                <br><br>
-                <button type="submit" class="button">Cadastrar</button>
+                <button type="submit" class="button" id="btn-login">Entrar</button>
+                <p id="msg-login" class="msg"></p>
             </form>
         </div>
-        <table id="tabela">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Email</th>
-                </tr>
-            </thead>
-        </table>
 
         <footer>
             <p>&copy; 2025 InovaLocal - Todos os direitos reservados.</p>
         </footer>
 
         <script>
-            // Se quiser, detecta o host do front e usa coerente:
-            const FRONT = location.host; // ex.: 127.0.0.1:5501
-            const API_BASE = "http://localhost:6967"; // seu back
-            const API = `${API_BASE}/usuarios`;
+            const API = "http://localhost:6967/usuarios";
+            const USER_KEY = "sessao.usuario";
 
             document.addEventListener("DOMContentLoaded", () => {
-                const form = document.getElementById("form-cadastro-usuario");
-                const tbody = document.querySelector("#tabela tbody");
-                const msg = document.getElementById("mensagem");
+                const form = document.getElementById("form-login-usuario");
+                const emailL = document.getElementById("email");
+                const senhaL = document.getElementById("senha");
+                const btn = document.getElementById("btn-login");
+                const msg = document.getElementById("msg-login");
 
-                if (!form) {
-                    console.error("Formulário de cadastro não encontrado.");
-                    return;
-                }
+                if (!form) return;
 
                 form.addEventListener("submit", onSubmit);
-                carregarTabela(); // carrega na abertura
 
                 async function onSubmit(e) {
                     e.preventDefault();
                     clearMsg();
+                    lock(true);
 
-                    const fd = new FormData(form);
-                    const nome = (fd.get("nome") || "").trim();
-                    const email = (fd.get("email") || "").trim();
-                    const senha = (fd.get("senha") || "").trim();
-                    const confirmar = (fd.get("confirmar-senha") || "").trim();
+                    const email = (emailL?.value || "").trim();
+                    const senha = (senhaL?.value || "").trim();
 
-                    if (!nome || !email || !senha) {
-                        return showMsg("Por favor, preencha todos os campos obrigatórios.", "erro");
+
+                    if (!email || !senha) {
+                        return showMsg("Informe E-mail e senha.", "erro");
                     }
-                    if (senha !== confirmar) {
-                        return showMsg("As senhas não coincidem.", "erro");
-                    }
+                    
                     if (!/^\S+@\S+\.\S+$/.test(email)) {
                         return showMsg("E-mail inválido.", "erro");
+                        return lock(false);
                     }
-
-                    const usuario = { nome, email, senha };
-
+                    
                     try {
                         const response = await fetch(API, {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify(usuario)
+                            headers: {
+                                "Accept": "application/json"
+                            }
                         });
+                        if(!response.ok) throw new Error(`Falha ao consultar usuários (${response.status})`);
+                        const usuarios = await response.json();
 
-                        const maybeText = await response.text();
-                        const payload = tryParseJSON(maybeText);
+                        const user = Array.isArray(usuarios)
+                        ? usuarios.find(usuario => (usuario.email || "").trim().toLowerCase() === email.toLowerCase() && String(usuario.senha || "") === senha) : null;
 
-                        if (!response.ok) {
-                            const detalhe = payload?.message || payload?.error || maybeText || "Erro ao cadastrar usuário.";
-                            throw new Error(detalhe);
+                        if(!user){
+                            showMsg("Credenciais inválidas.", "erro");
+                            return;
                         }
+                        sessionStorage.setItem(USER_KEY, JSON.stringify({
+                            id: user.id,
+                            nome: user.nome,
+                            email: user.email
+                        }));
 
-                        form.reset();
-                        showMsg("Usuário cadastrado com sucesso!", "ok");
-                        await carregarTabela(); // atualiza a tabela
+                        showMsg("Login realizado!", "ok");
+                        window.location.href = "/Front/PAGES/homepage.html";
+
                     } catch (error) {
-                        console.error("Falha no POST:", error);
-                        showMsg(String(error.message || error), "erro");
+                        console.error("Erro no login:", error);
+                        showMsg("Não foi possível realizar o login agora.", "erro");
+                    } finally {
+                        lock(false);
                     }
                 }
-
-                function clearMsg() {
-                    if (msg) {
-                        msg.textContent = "";
-                        msg.className = "msg";
-                    }
-                }
-
-                function showMsg(mensagem, tipo) {
-                    if (!msg) return;
-                    msg.textContent = mensagem;
-                    msg.className = tipo === "ok" ? "msg ok" : "msg erro";
-                }
-
-                async function carregarTabela() {
-                    try {
-                        const response = await fetch(API, {
-                            headers: { "Accept": "application/json" }
-                        });
-
-                        if (!response.ok) {
-                            throw new Error(`GET falhou: ${response.status}`);
-                        }
-
-                        const dados = await response.json();
-
-                        if (tbody) {
-                            tbody.innerHTML = "";
-                            (dados || []).forEach(usuario => {
-                                const tr = document.createElement("tr");
-                                tr.innerHTML = `
-              <td>${escapeHTML(usuario.nome)}</td>
-              <td>${escapeHTML(usuario.email)}</td>
-              <td><em>********</em></td>
-            `;
-                                tbody.appendChild(tr);
-                            });
-                        }
-                    } catch (error) {
-                        console.error("Falha no GET:", error);
-                        showMsg("Não foi possível carregar a lista de usuários.", "erro");
-                    }
-                }
-            });
-
-            // helpers
-            function tryParseJSON(jsonString) {
-                try { return JSON.parse(jsonString); } catch { return null; }
+            function lock(loading){
+                if(!btn) return;
+                btn.disabled = loading;
+                btn.textContent = loading ? "Entrando..." : "Entrar";
             }
-
-            function escapeHTML(str) {
-                return String(str ?? "")
-                    .replaceAll("&", "&amp;")
-                    .replaceAll("<", "&lt;")
-                    .replaceAll(">", "&gt;")
-                    .replaceAll('"', "&quot;")
-                    .replaceAll("'", "&#39;");
+            function showMsg(texto, tipo){
+                if(!msg) return;
+                msg.textContent = texto;
+                msg.className = "msg" + (tipo === "ok" ? "ok" : "erro");
             }
+            function clearMsg(){
+                if(msg){
+                    msg.textContent = "";
+                    msg.className = "msg";
+                }
+            }
+        });
+                   
+
         </script>
-
-
 </body>
 
 </html>
