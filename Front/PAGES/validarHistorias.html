@@ -230,6 +230,33 @@
         <p>&copy; 2025 InovaLocal - Todos os direitos reservados.</p>
     </footer>
     
-    <script src="../JS/script.js"></script>
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const aprovarBtns = document.querySelectorAll(".btn-approve");
+  const recusarBtns = document.querySelectorAll(".btn-reject");
+
+  function removerCard(card) {
+    card.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+    card.style.opacity = "0";
+    card.style.transform = "translateY(-10px)";
+    setTimeout(() => card.remove(), 400);
+  }
+
+  aprovarBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const card = btn.closest(".card-review");
+      removerCard(card);
+    });
+  });
+
+  recusarBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const card = btn.closest(".card-review");
+      removerCard(card);
+    });
+  });
+});
+</script>
+
 </body>
 </html>
